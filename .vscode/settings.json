@@ -1,12 +1,16 @@
 {
     "cSpell.words": [
+        "Chattable",
         "envconfig",
         "gonic",
+        "Inne",
         "Jakub",
         "kelseyhightower",
         "NGROK",
         "samber",
-        "tgbotapi"
+        "Samvirk",
+        "tgbotapi",
+        "workapi"
     ],
     "go.testEnvFile": "${workspaceFolder}/.env",
 }

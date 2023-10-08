@@ -6,15 +6,11 @@ import (
 	"log/slog"
 
 	"github.com/JakubC-projects/work-telegram-bot/src/config"
-	"github.com/JakubC-projects/work-telegram-bot/src/log"
 	"github.com/JakubC-projects/work-telegram-bot/src/telegram"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	log.Configure()
-	config.Configure()
-
 	r := gin.New()
 
 	r.POST("/telegram-update", telegram.TelegramUpdateHttpHandler)

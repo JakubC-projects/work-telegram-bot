@@ -6,7 +6,9 @@ import (
 	"log/slog"
 )
 
-func Configure() {
+var L *slog.Logger
+
+func init() {
 
 	var handler slog.Handler
 	opts := &slog.HandlerOptions{
@@ -20,5 +22,5 @@ func Configure() {
 		handler = slog.NewTextHandler(os.Stderr, opts)
 	}
 
-	slog.SetDefault(slog.New(handler))
+	L = slog.New(handler)
 }

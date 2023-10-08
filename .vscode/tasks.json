@@ -2,8 +2,8 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "ngrok",
-            "command": "${workspaceFolder}/scripts/ngrok.sh",
+            "label": "setup_local_webhook",
+            "command": "${workspaceFolder}/scripts/setup_local_webhook.sh",
             "problemMatcher": []
         }
     ]

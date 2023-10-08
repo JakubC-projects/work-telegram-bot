@@ -8,7 +8,7 @@ import (
 
 var C Config
 
-func Configure() {
+func init() {
 	err := envconfig.Process("", &C)
 	if err != nil {
 		slog.Error("Cannot read env",

@@ -31,5 +31,14 @@ func TelegramUpdateHttpHandler(c *gin.Context) {
 func HandleUpdate(ctx context.Context, u tgbotapi.Update) error {
 	slog.DebugContext(ctx, "Received message",
 		"update", u)
+
+	if u.Message != nil {
+		return handleCommand(ctx, u.Message)
+	}
+
+	if u.CallbackQuery != nil {
+		return handleCallback(ctx, u.CallbackQuery)
+	}
+
 	return nil
 }
