@@ -1,0 +1,5 @@
+POST http://localhost:3030/telegram-update
+
+{
+    "update": "hello"
+}
