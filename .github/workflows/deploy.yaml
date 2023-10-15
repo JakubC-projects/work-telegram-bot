@@ -2,6 +2,9 @@ name: Auto deployments prod
 
 on:
   workflow_dispatch:
+  push:
+    branches: 
+      [ main ]
 
 env:
   IMAGE_URL: europe-west1-docker.pkg.dev/work-telegram-bot/main/work-telegram-bot
