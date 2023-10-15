@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_URL: europe-west4-docker.pkg.dev/work-telegram-bot/main/work-telegram-bot
+  IMAGE_URL: europe-west1-docker.pkg.dev/work-telegram-bot/main/work-telegram-bot
   CLOUD_RUN_NAME: work-telegram-bot
   CLOUD_RUN_REGION: europe-central2
 
