@@ -6,7 +6,7 @@ on:
 env:
   IMAGE_URL: europe-west1-docker.pkg.dev/work-telegram-bot/main/work-telegram-bot
   CLOUD_RUN_NAME: work-telegram-bot
-  CLOUD_RUN_REGION: europe-central2
+  CLOUD_RUN_REGION: europe-west1
 
 jobs:
   build:
