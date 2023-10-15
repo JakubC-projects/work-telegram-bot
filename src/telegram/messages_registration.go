@@ -82,7 +82,7 @@ func getSetDateAction(d civil.Date) (string, tgbotapi.InlineKeyboardMarkup) {
 	buttons := tgbotapi.InlineKeyboardMarkup{
 		InlineKeyboard: [][]tgbotapi.InlineKeyboardButton{
 			{{Text: "-1 Day", CallbackData: setDateActionCallback(d, -1)}, {Text: "+1 Day", CallbackData: setDateActionCallback(d, 1)}},
-			{{Text: "Save", CallbackData: saveDateActionCallback(d)}},
+			{{Text: "Next", CallbackData: saveDateActionCallback(d)}},
 		},
 	}
 	return text, buttons
@@ -102,7 +102,7 @@ func getSetHoursAction(h float64) (string, tgbotapi.InlineKeyboardMarkup) {
 		InlineKeyboard: [][]tgbotapi.InlineKeyboardButton{
 			{{Text: "-1 Hour", CallbackData: setHourActionCallback(h, -1)}, {Text: "+1 Hour", CallbackData: setHourActionCallback(h, 1)}},
 			{{Text: "-15 Minutes", CallbackData: setHourActionCallback(h, -0.25)}, {Text: "+15 Minutes", CallbackData: setHourActionCallback(h, 0.25)}},
-			{{Text: "Save", CallbackData: saveHourActionCallback(h)}},
+			{{Text: "Next", CallbackData: saveHourActionCallback(h)}},
 		},
 	}
 	return text, buttons
@@ -127,7 +127,7 @@ func getSetGoalAction(g models.WorkGoal) (string, tgbotapi.InlineKeyboardMarkup)
 			{{Text: string(models.GoalBUK), CallbackData: setGoalActionCallback(models.GoalBUK)}},
 			{{Text: string(models.GoalSamvirk), CallbackData: setGoalActionCallback(models.GoalSamvirk)}},
 			{{Text: string(models.GoalOther), CallbackData: setGoalActionCallback(models.GoalOther)}},
-			{{Text: "Save", CallbackData: saveGoalActionCallback(g)}},
+			{{Text: "Next", CallbackData: saveGoalActionCallback(g)}},
 		},
 	}
 	return text, buttons
@@ -147,7 +147,7 @@ func saveGoalActionCallback(g models.WorkGoal) *string {
 func getReadyToSendAction() (string, tgbotapi.InlineKeyboardMarkup) {
 	return "", tgbotapi.InlineKeyboardMarkup{
 		InlineKeyboard: [][]tgbotapi.InlineKeyboardButton{
-			{{Text: "Send", CallbackData: lo.ToPtr(`sendReg`)}},
+			{{Text: "Submit registration", CallbackData: lo.ToPtr(`sendReg`)}},
 		},
 	}
 }
