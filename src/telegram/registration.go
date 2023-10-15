@@ -82,15 +82,24 @@ func sendRegistration(ctx context.Context, c *tgbotapi.CallbackQuery) error {
 		return err
 	}
 
+	err = workapi.SaveRegistration(ctx, reg.Reg)
+	if err != nil {
+		err = fmt.Errorf("cannot save registration: %w", err)
+		log.L.Error("cannot save registration", "err", err)
+		client.Send(tgbotapi.NewMessage(c.Message.Chat.ID, err.Error()))
+		return err
+	}
+
 	_, err = client.Send(sendRegMessage(c.Message.Chat.ID, c.Message.MessageID, reg))
 	if err != nil {
-		return nil
+		return err
 	}
 
 	results, err := workapi.GetResults(ctx)
 	if err != nil {
+		err = fmt.Errorf("cannot get results: %w", err)
 		log.L.Error("cannot get results", "err", err)
-		client.Send(tgbotapi.NewMessage(c.Message.Chat.ID, "cannot get results"))
+		client.Send(tgbotapi.NewMessage(c.Message.Chat.ID, err.Error()))
 		return nil
 	}
 
