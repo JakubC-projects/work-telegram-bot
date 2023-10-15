@@ -12,6 +12,7 @@ import (
 	"github.com/JakubC-projects/work-telegram-bot/src/db"
 	"github.com/JakubC-projects/work-telegram-bot/src/log"
 	"github.com/JakubC-projects/work-telegram-bot/src/models"
+	"github.com/JakubC-projects/work-telegram-bot/src/workapi"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/samber/lo"
 )
@@ -23,6 +24,7 @@ func startRegistration(ctx context.Context, m *tgbotapi.Message) error {
 		UserId: m.From.ID,
 		Reg: models.Registration{
 			Name:            m.From.FirstName + " " + m.From.LastName,
+			Color:           models.ColorGreen,
 			WorkDescription: description,
 		},
 		Action: models.RegistrationAction{
@@ -58,8 +60,6 @@ func updateReg(ctx context.Context, c *tgbotapi.CallbackQuery) error {
 		return err
 	}
 
-	fmt.Println(updateData)
-
 	if err := json.Unmarshal([]byte(updateData), &reg); err != nil {
 		return fmt.Errorf("cannot unmarshal json: %w", err)
 	}
@@ -68,11 +68,33 @@ func updateReg(ctx context.Context, c *tgbotapi.CallbackQuery) error {
 		return fmt.Errorf("cannot save updated state: %w", err)
 	}
 
-	client.Send(updateRegMessage(c.Message.Chat.ID, c.Message.MessageID, reg))
+	_, err = client.Send(updateRegMessage(c.Message.Chat.ID, c.Message.MessageID, reg))
 
-	return nil
+	return err
 }
 
-func sendRegistration(ctx context.Context, c *tgbotapi.CallbackQuery) (tgbotapi.Chattable, error) {
-	return nil, nil
+func sendRegistration(ctx context.Context, c *tgbotapi.CallbackQuery) error {
+	reg, err := db.GetRegistration(ctx, c.Message.Chat.ID, c.Message.MessageID)
+	if err != nil {
+		if errors.Is(err, db.ErrNotFound) {
+			return nil
+		}
+		return err
+	}
+
+	_, err = client.Send(sendRegMessage(c.Message.Chat.ID, c.Message.MessageID, reg))
+	if err != nil {
+		return nil
+	}
+
+	results, err := workapi.GetResults(ctx)
+	if err != nil {
+		log.L.Error("cannot get results", "err", err)
+		client.Send(tgbotapi.NewMessage(c.Message.Chat.ID, "cannot get results"))
+		return nil
+	}
+
+	_, err = client.Send(newResultsMessage(c.Message.Chat.ID, results))
+
+	return err
 }

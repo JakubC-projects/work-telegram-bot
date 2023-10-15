@@ -1,5 +1,5 @@
 [build]
-  full_bin = "env $(cat .env | xargs) ./tmp/main"
+  full_bin = "export $(grep -v '^#' .env | xargs -d '\n'); ./tmp/main"
   cmd = "go build -gcflags='all=-N -l'  -o ./tmp/main ./src/main.go"
   include_dir = ["src"]
   delay = 50

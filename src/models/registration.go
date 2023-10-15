@@ -15,7 +15,10 @@ type Registration struct {
 type Color string
 
 const (
-	ColorGreen Color = "🟢 GREEN"
+	ColorGreen  Color = "🟢 GREEN"
+	ColorRed    Color = "🔴 RED"
+	ColorOrange Color = "🟠 ORANGE"
+	ColorBlue   Color = "🔵 BLUE"
 )
 
 type WorkGoal string

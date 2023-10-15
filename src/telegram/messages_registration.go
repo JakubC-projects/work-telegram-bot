@@ -33,6 +33,33 @@ func updateRegMessage(chatId int64, messageID int, state models.RegistrationStat
 	return tgbotapi.NewEditMessageTextAndMarkup(chatId, messageID, text, buttons)
 }
 
+func getRegistrationBase(reg models.Registration) string {
+	var result = "Your registration\n"
+
+	if reg.Name != "" {
+		result += "Name: " + reg.Name + "\n"
+	}
+	if reg.WorkDescription != "" {
+		result += "Description: " + reg.WorkDescription + "\n"
+	}
+	if reg.Color != "" {
+		result += "Color: " + string(reg.Color) + "\n"
+	}
+	if reg.Date != nil {
+		result += "Date: " + reg.Date.String() + "\n"
+	}
+
+	if reg.Hours != 0 {
+		result += fmt.Sprintf("Hours: %.2f\n", reg.Hours)
+	}
+
+	if reg.WorkGoal != "" {
+		result += fmt.Sprintf("Work goal: %s\n", reg.WorkGoal)
+	}
+
+	return result
+}
+
 func getRegistrationAction(action models.RegistrationAction) (string, tgbotapi.InlineKeyboardMarkup) {
 	switch action.Type {
 	case models.ActionSetDate:
@@ -43,6 +70,9 @@ func getRegistrationAction(action models.RegistrationAction) (string, tgbotapi.I
 
 	case models.ActionSetGoal:
 		return getSetGoalAction(action.SetGoal)
+
+	case models.ActionReadyToSend:
+		return getReadyToSendAction()
 	}
 	return "", tgbotapi.InlineKeyboardMarkup{}
 }
@@ -111,5 +141,13 @@ func saveGoalActionCallback(g models.WorkGoal) *string {
 	if g == "" {
 		return lo.ToPtr("noop")
 	}
-	return lo.ToPtr(fmt.Sprintf(`updateReg:{"reg":{"goal": "%s"},"action":{"type": 0}}`, g))
+	return lo.ToPtr(fmt.Sprintf(`updateReg:{"reg":{"goal": "%s"},"action":{"type": 4}}`, g))
+}
+
+func getReadyToSendAction() (string, tgbotapi.InlineKeyboardMarkup) {
+	return "", tgbotapi.InlineKeyboardMarkup{
+		InlineKeyboard: [][]tgbotapi.InlineKeyboardButton{
+			{{Text: "Send", CallbackData: lo.ToPtr(`sendReg`)}},
+		},
+	}
 }

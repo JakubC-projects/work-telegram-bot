@@ -5,6 +5,12 @@
             "label": "setup_local_webhook",
             "command": "${workspaceFolder}/scripts/setup_local_webhook.sh",
             "problemMatcher": []
+        },
+
+        {
+            "label": "start_redis",
+            "command": "${workspaceFolder}/scripts/start_redis.sh",
+            "problemMatcher": []
         }
     ]
 }

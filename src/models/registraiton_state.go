@@ -22,4 +22,5 @@ const (
 	ActionSetDate
 	ActionSetHour
 	ActionSetGoal
+	ActionReadyToSend
 )

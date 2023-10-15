@@ -16,6 +16,8 @@ func handleCallback(ctx context.Context, callback *tgbotapi.CallbackQuery) error
 	switch command {
 	case "updateReg":
 		return updateReg(ctx, callback)
+	case "sendReg":
+		return sendRegistration(ctx, callback)
 	}
 
 	return nil
