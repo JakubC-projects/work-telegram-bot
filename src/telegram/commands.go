@@ -24,7 +24,7 @@ func handleCommand(ctx context.Context, m *tgbotapi.Message) error {
 		}
 		break
 
-	case "/result":
+	case "/result", "/results":
 		results, err := workapi.GetResults(ctx)
 		if err != nil {
 			log.L.Error("cannot get results", "err", err)
