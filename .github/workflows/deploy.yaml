@@ -23,7 +23,7 @@ jobs:
       - name: Login to the artifact registry
         shell: bash
         run: |-
-          gcloud --quiet auth configure-docker europe-west4-docker.pkg.dev
+          gcloud --quiet auth configure-docker europe-west1-docker.pkg.devs
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v2
